@@ -2,31 +2,31 @@
 #include <cmath>
 
 struct WaveFolder : Module {
-	enum ParamIds {
-		AMOUNT_PARAM,
-		NUM_PARAMS
-	};
-	enum InputIds {
+  enum ParamIds {
+    AMOUNT_PARAM,
+    NUM_PARAMS
+  };
+  enum InputIds {
     AMOUNT_INPUT,
-		SIGNAL_INPUT,
-		NUM_INPUTS
-	};
-	enum OutputIds {
-		SIGNAL_OUTPUT,
-		NUM_OUTPUTS
-	};
-	enum LightIds {
-		BLINK_LIGHT,
-		NUM_LIGHTS
-	};
+    SIGNAL_INPUT,
+    NUM_INPUTS
+  };
+  enum OutputIds {
+    SIGNAL_OUTPUT,
+    NUM_OUTPUTS
+  };
+  enum LightIds {
+    BLINK_LIGHT,
+    NUM_LIGHTS
+  };
 
-	WaveFolder() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {}
-	void step() override;
+  WaveFolder() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {}
+  void step() override;
 
-	// For more advanced Module features, read Rack's engine.hpp header file
-	// - toJson, fromJson: serialization of internal data
-	// - onSampleRateChange: event triggered by a change of sample rate
-	// - onReset, onRandomize, onCreate, onDelete: implements special behavior when user clicks these from the context menu
+  // For more advanced Module features, read Rack's engine.hpp header file
+  // - toJson, fromJson: serialization of internal data
+  // - onSampleRateChange: event triggered by a change of sample rate
+  // - onReset, onRandomize, onCreate, onDelete: implements special behavior when user clicks these from the context menu
 };
 
 
@@ -39,21 +39,21 @@ void WaveFolder::step() {
 
 
 struct WaveFolderWidget : ModuleWidget {
-	WaveFolderWidget(WaveFolder *module) : ModuleWidget(module) {
-		setPanel(SVG::load(assetPlugin(plugin, "res/WaveFolder.svg")));
+  WaveFolderWidget(WaveFolder *module) : ModuleWidget(module) {
+    setPanel(SVG::load(assetPlugin(plugin, "res/WaveFolder.svg")));
 
-		addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 4 * RACK_GRID_WIDTH, 0)));
-		addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 1 * RACK_GRID_WIDTH, 0)));
-		addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 1 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+    addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 4 * RACK_GRID_WIDTH, 0)));
+    addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 1 * RACK_GRID_WIDTH, 0)));
+    addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+    addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 1 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
     addParam(ParamWidget::create<Davies1900hBlackKnob>(Vec(13, 70), module, WaveFolder::AMOUNT_PARAM, 0.0, 5.0, 0.0));
 
-		addInput(Port::create<PJ301MPort>(Vec(18, 150), Port::INPUT, module, WaveFolder::AMOUNT_INPUT));
-		addInput(Port::create<PJ301MPort>(Vec(18, 225), Port::INPUT, module, WaveFolder::SIGNAL_INPUT));
+    addInput(Port::create<PJ301MPort>(Vec(18, 150), Port::INPUT, module, WaveFolder::AMOUNT_INPUT));
+    addInput(Port::create<PJ301MPort>(Vec(18, 225), Port::INPUT, module, WaveFolder::SIGNAL_INPUT));
 
-		addOutput(Port::create<PJ301MPort>(Vec(18, 300), Port::OUTPUT, module, WaveFolder::SIGNAL_OUTPUT));
-	}
+    addOutput(Port::create<PJ301MPort>(Vec(18, 300), Port::OUTPUT, module, WaveFolder::SIGNAL_OUTPUT));
+  }
 };
 
 

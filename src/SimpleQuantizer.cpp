@@ -2,40 +2,40 @@
 #include "dsp/digital.hpp"
 
 struct SimpleQuantizer : Module {
-	enum ParamIds {
-		PITCH_PARAM,
-		NUM_PARAMS
-	};
-	enum InputIds {
+  enum ParamIds {
+    PITCH_PARAM,
+    NUM_PARAMS
+  };
+  enum InputIds {
     TRIGGER_INPUT,
-		PITCH_INPUT,
-		NUM_INPUTS
-	};
-	enum OutputIds {
-		QUANTIZED_OUTPUT,
-		NUM_OUTPUTS
-	};
-	enum LightIds {
-		BLINK_LIGHT,
-		NUM_LIGHTS
-	};
+    PITCH_INPUT,
+    NUM_INPUTS
+  };
+  enum OutputIds {
+    QUANTIZED_OUTPUT,
+    NUM_OUTPUTS
+  };
+  enum LightIds {
+    BLINK_LIGHT,
+    NUM_LIGHTS
+  };
 
-	float phase = 0.0;
+  float phase = 0.0;
   float quantized_pitch = 0.0;
   SchmittTrigger trigger;
 
-	SimpleQuantizer() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {}
-	void step() override;
+  SimpleQuantizer() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {}
+  void step() override;
 
-	// For more advanced Module features, read Rack's engine.hpp header file
-	// - toJson, fromJson: serialization of internal data
-	// - onSampleRateChange: event triggered by a change of sample rate
-	// - onReset, onRandomize, onCreate, onDelete: implements special behavior when user clicks these from the context menu
+  // For more advanced Module features, read Rack's engine.hpp header file
+  // - toJson, fromJson: serialization of internal data
+  // - onSampleRateChange: event triggered by a change of sample rate
+  // - onReset, onRandomize, onCreate, onDelete: implements special behavior when user clicks these from the context menu
 };
 
 
 void SimpleQuantizer::step() {
-	float pitch = inputs[PITCH_INPUT].value;
+  float pitch = inputs[PITCH_INPUT].value;
   if (trigger.process(inputs[TRIGGER_INPUT].value)) {
     pitch = clamp(pitch, -4.0f, 4.0f);
     pitch += 4.0f;
@@ -50,18 +50,18 @@ void SimpleQuantizer::step() {
 
 
 struct SimpleQuantizerWidget : ModuleWidget {
-	SimpleQuantizerWidget(SimpleQuantizer *module) : ModuleWidget(module) {
-		setPanel(SVG::load(assetPlugin(plugin, "res/Quant.svg")));
+  SimpleQuantizerWidget(SimpleQuantizer *module) : ModuleWidget(module) {
+    setPanel(SVG::load(assetPlugin(plugin, "res/Quant.svg")));
 
-		addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+    addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+    addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addInput(Port::create<PJ301MPort>(Vec(3, 110), Port::INPUT, module, SimpleQuantizer::TRIGGER_INPUT));
+    addInput(Port::create<PJ301MPort>(Vec(3, 110), Port::INPUT, module, SimpleQuantizer::TRIGGER_INPUT));
 
-		addInput(Port::create<PJ301MPort>(Vec(3, 205), Port::INPUT, module, SimpleQuantizer::PITCH_INPUT));
+    addInput(Port::create<PJ301MPort>(Vec(3, 205), Port::INPUT, module, SimpleQuantizer::PITCH_INPUT));
 
-		addOutput(Port::create<PJ301MPort>(Vec(3, 300), Port::OUTPUT, module, SimpleQuantizer::QUANTIZED_OUTPUT));
-	}
+    addOutput(Port::create<PJ301MPort>(Vec(3, 300), Port::OUTPUT, module, SimpleQuantizer::QUANTIZED_OUTPUT));
+  }
 };
 
 
