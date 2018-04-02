@@ -37,12 +37,12 @@ struct SimpleQuantizer : Module {
 void SimpleQuantizer::step() {
   float pitch = inputs[PITCH_INPUT].value;
   if (trigger.process(inputs[TRIGGER_INPUT].value)) {
-    pitch = clamp(pitch, -4.0f, 4.0f);
-    pitch += 4.0f;
+    pitch = clamp(pitch, -5.0f, 5.0f);
+    pitch += 5.0f;
     pitch *= 12.0/1.0;
     pitch = (int)pitch;
     pitch *= 1.0/12.0;
-    pitch -= 4.0f;
+    pitch -= 5.0f;
     quantized_pitch = pitch;
   }
   outputs[QUANTIZED_OUTPUT].value = quantized_pitch;
