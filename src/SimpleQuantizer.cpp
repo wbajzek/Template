@@ -51,7 +51,7 @@ void SimpleQuantizer::step() {
 
 struct SimpleQuantizerWidget : ModuleWidget {
   SimpleQuantizerWidget(SimpleQuantizer *module) : ModuleWidget(module) {
-    setPanel(SVG::load(assetPlugin(plugin, "res/Quant.svg")));
+    setPanel(SVG::load(assetPlugin(plugin, "res/SimpleQuantizer.svg")));
 
     addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
     addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
