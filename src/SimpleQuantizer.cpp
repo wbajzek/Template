@@ -68,4 +68,4 @@ struct SimpleQuantizerWidget : ModuleWidget {
 // author name for categorization per plugin, module slug (should never
 // change), human-readable module name, and any number of tags
 // (found in `include/tags.hpp`) separated by commas.
-Model *modelSimpleQuantizer = Model::create<SimpleQuantizer, SimpleQuantizerWidget>("WTB", "SimpleQuantizer", "Simple Quantizer", UTILITY_TAG);
+Model *modelSimpleQuantizer = Model::create<SimpleQuantizer, SimpleQuantizerWidget>("William Bajzek", "SimpleQuantizer", "Simple Quantizer", UTILITY_TAG);
