@@ -16,7 +16,6 @@ struct WaveFolder : Module {
     NUM_OUTPUTS
   };
   enum LightIds {
-    BLINK_LIGHT,
     NUM_LIGHTS
   };
 
