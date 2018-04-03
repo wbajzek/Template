@@ -33,7 +33,15 @@ struct WaveFolder : Module {
 
 void WaveFolder::step() {
   float input = inputs[SIGNAL_INPUT].value;
-  float amount = clamp(inputs[AMOUNT_INPUT].value, 0.0f, 5.0f) * params[AMOUNT_PARAM].value * 0.1f;
+  float amount = clamp(inputs[AMOUNT_INPUT].value, 0.0f, 5.0f) * params[AMOUNT_PARAM].value; // * 0.1f;
+
+  // exponential scaling
+  amount *= 0.04f;
+  amount *= amount;
+
+  // scale to a musical range
+  amount *= 2.5f;
+
   previous = amount = (amount + previous) * 0.5f; // smoothing
   float output = input - cos(input * amount);
   outputs[SIGNAL_OUTPUT].value = output;
