@@ -32,7 +32,13 @@ struct WaveFolder : Module {
 
 void WaveFolder::step() {
   float input = inputs[SIGNAL_INPUT].value;
-  float amount = clamp(inputs[AMOUNT_INPUT].value, 0.0f, 5.0f) * params[AMOUNT_PARAM].value; // * 0.1f;
+  float amount;
+  if (inputs[AMOUNT_INPUT].active)
+    amount = clamp(inputs[AMOUNT_INPUT].value, 0.0f, 5.0f);
+  else
+    amount = 5.0f;
+
+  amount *= params[AMOUNT_PARAM].value;
 
   // exponential scaling
   amount *= 0.04f;
