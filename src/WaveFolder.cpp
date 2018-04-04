@@ -34,18 +34,18 @@ void WaveFolder::step() {
   float input = inputs[SIGNAL_INPUT].value;
   float amount;
   if (inputs[AMOUNT_INPUT].active)
-    amount = clamp(inputs[AMOUNT_INPUT].value, 0.0f, 5.0f);
+    amount = clamp(inputs[AMOUNT_INPUT].value, 0.0f, 10.0f);
   else
-    amount = 5.0f;
+    amount = 10.0f;
 
   amount *= params[AMOUNT_PARAM].value;
 
   // exponential scaling
-  amount *= 0.04f;
+  amount *= 0.01f;
   amount *= amount;
 
   // scale to a musical range
-  amount *= 2.5f;
+  amount *= 10.f;
 
   previous = amount = (amount + previous) * 0.5f; // smoothing
   float output = input - cos(input * amount);
@@ -62,7 +62,7 @@ struct WaveFolderWidget : ModuleWidget {
     addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
     addChild(Widget::create<ScrewSilver>(Vec(box.size.x - 1 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-    addParam(ParamWidget::create<Davies1900hBlackKnob>(Vec(13, 70), module, WaveFolder::AMOUNT_PARAM, 0.0, 5.0, 0.0));
+    addParam(ParamWidget::create<Davies1900hBlackKnob>(Vec(13, 70), module, WaveFolder::AMOUNT_PARAM, 0.0, 10.0, 0.0));
 
     addInput(Port::create<PJ301MPort>(Vec(18, 150), Port::INPUT, module, WaveFolder::AMOUNT_INPUT));
     addInput(Port::create<PJ301MPort>(Vec(18, 225), Port::INPUT, module, WaveFolder::SIGNAL_INPUT));
